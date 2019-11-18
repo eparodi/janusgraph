@@ -1,2 +1,2 @@
 #!/bin/bash
-docker-compose exec cassandra cqlsh
+docker-compose exec cassandra cqlsh $@

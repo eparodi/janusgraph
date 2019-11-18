@@ -24,6 +24,8 @@ services:
       janusgraph.storage.backend: cql
       janusgraph.storage.hostname: jce-cassandra
       janusgraph.index.search.hostname: jce-elastic
+    volumes:
+      - ./src/:/code/
     ports:
       - "8182:8182"
     networks:
@@ -34,7 +36,7 @@ services:
       timeout: 30s
       retries: 3
   cassandra:
-    image: cassandra:3
+    image: cassandra:latest
     container_name: jce-cassandra
     ports:
       - "9042:9042"

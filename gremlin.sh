@@ -1,2 +1,3 @@
 #!/bin/bash
-docker-compose exec janusgraph ./bin/gremlin.sh
+echo "docker-compose exec janusgraph ./bin/gremlin.sh $@"
+docker-compose exec janusgraph ./bin/gremlin.sh $@

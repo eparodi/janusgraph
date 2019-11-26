@@ -14,7 +14,7 @@ graph.makePropertyKey('desc').dataType(String.class).make();
 graph.makePropertyKey('runways').dataType(Long.class).make();
 graph.makePropertyKey('longest').dataType(Long.class).make();
 graph.makePropertyKey('elev').dataType(Long.class).make();
-graph.makePropertyKey('loc').dataType(Geoshape.class).make()
+graph.makePropertyKey('loc').dataType(Geoshape.class).make();
 
 def createVertex(line, headers, graph) {
     not_included_params = ["label", "lat", "lon"]

@@ -1,5 +1,5 @@
 graph = JanusGraphFactory.open("/code/janusgraph.properties");
-fh = new File('/code/data/verticesParcial.csv');
+fh = new File('/code/data/cleanVertices.csv');
 
 graph.makeVertexLabel("version").make();
 graph.makeVertexLabel("airport").make();

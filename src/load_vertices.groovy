@@ -18,16 +18,27 @@ graph.makePropertyKey('loc').dataType(Geoshape.class).make();
 
 def createVertex(line, headers, graph) {
     not_included_params = ["label", "lat", "lon"]
+    long_params = ["runways", "longest", "elev"]
     map = [:];
     for (i = 0; i < line.size(); i++) {
         map[headers[i]] = line[i];
     }
 
     v = graph.addVertex(map["label"]);
-    v.property('loc', Geoshape.point(map["lat"], map["lon"]))
+    if (map["label"] == "airport") {
+	map["lat"] = map["lat"].toDouble()
+        if (map["lat"] > 90 || map["lat"] < 90) {
+            map["lat"] = map["lat"] / 10;
+        }
+        v.property('loc', Geoshape.point(map["lat"], map["lon"].toDouble()))
+    }
     for (header in headers) {
         if (not_included_params.contains(header) || !map.containsKey(header) || map[header] == "") {
             continue;
+        }
+	if (long_params.contains(header)) {
+            v.property(header, map[header].toDouble().longValue())
+	    continue;
         }
         v.property(header, map[header]);
     }

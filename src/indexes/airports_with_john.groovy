@@ -1,0 +1,12 @@
+graph = JanusGraphFactory.open("/code/janusgraph.properties")
+graph.tx().rollback()
+mgmt = graph.openManagement()
+airport = mgmt.getVertexLabel('airport')
+d = mgmt.getPropertyKey('desc')
+mgmt.buildIndex('airportssssWithJohn', Vertex.class).indexOnly(airport).addKey(d).buildMixedIndex('search')
+mgmt.commit()
+mgmt.awaitGraphIndexStatus(graph, 'airportssssWithJohn').call()
+mgmt = graph.openManagement()
+mgmt.updateIndex(mgmt.getGraphIndex("airportssssWithJohn"), SchemaAction.REINDEX).get()
+mgmt.commit()
+

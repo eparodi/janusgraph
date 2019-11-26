@@ -14,18 +14,19 @@ graph.makePropertyKey('desc').dataType(String.class).make();
 graph.makePropertyKey('runways').dataType(Long.class).make();
 graph.makePropertyKey('longest').dataType(Long.class).make();
 graph.makePropertyKey('elev').dataType(Long.class).make();
-graph.makePropertyKey('lat').dataType(String.class).make();
-graph.makePropertyKey('lon').dataType(String.class).make();
+graph.makePropertyKey('loc').dataType(Geoshape.class).make()
 
 def createVertex(line, headers, graph) {
+    not_included_params = ["label", "lat", "lon"]
     map = [:];
     for (i = 0; i < line.size(); i++) {
         map[headers[i]] = line[i];
     }
 
     v = graph.addVertex(map["label"]);
+    v.property('loc', Geoshape.point(map["lat"], map["lon"]))
     for (header in headers) {
-        if (header == "label" || !map.containsKey(header) || map[header] == "") {
+        if (not_included_params.contains(header) || !map.containsKey(header) || map[header] == "") {
             continue;
         }
         v.property(header, map[header]);
